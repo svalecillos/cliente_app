@@ -1,0 +1,44 @@
+<div class="card border-primary mb-3">
+  <div class="card-header">Clientes</div>
+  <div class="card-body text-primary">
+    <h5 class="card-title">Listado de clientes</h5>
+    <div class="my-2 text-left">
+      <button class="btn btn-rounded btn-primary" type="button" [routerLink] = "['/clientes/form']">Crear</button>
+    </div>
+    <div *ngIf="clientes?.length==0" class="alert alert-info">
+      No hay registros en la base de datos.
+    </div>
+    <table class="table table-bordered table-striped" *ngIf="clientes?.length>0">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Email</th>
+          <th>Fecha</th>
+          <th>Accion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientes">
+          <td>{{ cliente.id }}</td>
+          <td>{{ cliente.nombre }}</td>
+          <td>{{ cliente.apellido }}</td>
+          <td>{{ cliente.email }}</td>
+          <td>{{ cliente.createAt }}</td>
+          <td>
+            <button type="button" name="editar" 
+                    [routerLink]="['/clientes/form', cliente.id]"
+                    class="btn btn-primary btn-sm">Editar</button>
+            <button type="button" name="eliminar" 
+                    (click)="delete(cliente)"
+                    class="btn btn-danger btn-sm">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!--Inyectamos data al componente hijo, inyeccion de dependencia entre el componente padre y hijo-->
+    <!--Validamos se paginador esta lleno-->
+    <app-paginator *ngIf="paginador" [paginador] = "paginador"></app-paginator>
+  </div>
+</div>
