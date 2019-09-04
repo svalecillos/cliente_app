@@ -11,6 +11,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ClienteComponent } from './components/cliente/cliente.component';
 import { FormComponent } from './components/cliente/form.component';
+import { DetalleComponent } from './components/cliente/detalle/detalle.component';
 
 //Services
 import { ClienteService } from './service/cliente.service';
@@ -25,6 +26,7 @@ const routes:Routes = [
   {path: 'clientes/page/:page', component: ClienteComponent},
   {path: 'clientes/form', component: FormComponent},
   {path: 'clientes/form/:id', component: FormComponent},
+  {path: 'clientes/ver/:id', component: DetalleComponent},
 ];
 
 @NgModule({
@@ -34,7 +36,8 @@ const routes:Routes = [
     FooterComponent,
     ClienteComponent,
     FormComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    DetalleComponent,
   ],
   imports: [
     BrowserModule,

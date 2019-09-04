@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Cliente } from '../model/cliente';
-import { CLIENTES } from '../components/cliente/clientes.json';
+//import { CLIENTES } from '../components/cliente/clientes.json';
 import { of, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
@@ -86,5 +86,22 @@ export class ClienteService {
         return throwError(e);
       })
     );
+  }
+
+  subirFoto(archivo: File, idCliente): Observable<Cliente>{//Con el observable, podemos obtener la foto y mostrarlo en el cliente
+
+    let formData = new FormData();//Permite subir una imagen
+    //
+    formData.append("archivo", archivo);
+    formData.append("id", idCliente);
+
+    return this.http.post(`${this.url}/upload/`, formData).pipe(
+      map((response: any ) => response.cliente as Cliente),
+        catchError(e => {
+          Swal.fire(e.error.mensaje, e.error.error, 'error');
+          return throwError(e);
+        })
+    );
+    
   }
 }
