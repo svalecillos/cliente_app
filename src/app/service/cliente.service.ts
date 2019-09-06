@@ -91,7 +91,7 @@ export class ClienteService {
   subirFoto(archivo: File, idCliente): Observable<Cliente>{//Con el observable, podemos obtener la foto y mostrarlo en el cliente
 
     let formData = new FormData();//Permite subir una imagen
-    //
+    
     formData.append("archivo", archivo);
     formData.append("id", idCliente);
 

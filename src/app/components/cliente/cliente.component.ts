@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Cliente } from '../../model/cliente';
+import { ModalService } from '../../service/modal.service';
 import { ClienteService } from 'src/app/service/cliente.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -13,8 +14,10 @@ export class ClienteComponent implements OnInit {
 
   clientes: Cliente[];
   paginador: any;
+  clienteSeleccionado:Cliente;
 
   constructor(private _clienteService: ClienteService,
+              private _modalService: ModalService,
               private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -32,6 +35,16 @@ export class ClienteComponent implements OnInit {
         }//Funcion anonima
       );
     });
+
+    //actualiza la foto en la tabla clientes al mismo tiempo que se sube al servidor
+    this._modalService.notificarUpload.subscribe(cliente => {
+      this.clientes = this.clientes.map(clienteOriginal => {
+        if(cliente.id == clienteOriginal.id){
+          clienteOriginal.foto = cliente.foto;
+        }
+        return clienteOriginal;
+      })
+    })
   }
 
   delete(cliente: Cliente): void {
@@ -58,6 +71,11 @@ export class ClienteComponent implements OnInit {
         )
       }
     })
+  }
+
+  abrirModal(cliente: Cliente){
+    this.clienteSeleccionado = cliente;
+    this._modalService.abrirModal(); 
   }
 
 }
