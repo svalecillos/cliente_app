@@ -16,6 +16,7 @@ import { DetalleComponent } from './components/cliente/detalle/detalle.component
 //Services
 import { ClienteService } from './service/cliente.service';
 import { PaginatorComponent } from './paginator/paginator.component';
+import { LoginComponent } from './components/usuario/login.component';
 
 //Registramos de forma global la variable locar, en este caso español españa
 registerLocaleData(localeES, 'es');
@@ -26,6 +27,7 @@ const routes:Routes = [
   {path: 'clientes/page/:page', component: ClienteComponent},
   {path: 'clientes/form', component: FormComponent},
   {path: 'clientes/form/:id', component: FormComponent},
+  {path: 'login', component: LoginComponent}
 ];
 
 @NgModule({
@@ -37,6 +39,7 @@ const routes:Routes = [
     FormComponent,
     PaginatorComponent,
     DetalleComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
