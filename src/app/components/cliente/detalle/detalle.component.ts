@@ -3,6 +3,8 @@ import { Cliente } from '../../../model/cliente';
 import { ClienteService } from '../../../service/cliente.service';
 import { ModalService } from '../../../service/modal.service';
 import Swal from 'sweetalert2';
+import { HttpEventType } from '@angular/common/http';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-detalle',
@@ -17,6 +19,7 @@ export class DetalleComponent implements OnInit {
   private fotoSeleccionada: File;
 
   constructor( private _clienteService: ClienteService,
+                private _authService: AuthService,
                 private _modalService: ModalService) { }
 
   ngOnInit() {
@@ -46,10 +49,13 @@ export class DetalleComponent implements OnInit {
       Swal.fire('Error Upload:', 'Debe seleccionar una foto', 'error');
     }else{
       this._clienteService.subirFoto(this.fotoSeleccionada, this.cliente.id)
-        .subscribe(cliente => {
-          this.cliente = cliente;
-          this._modalService.notificarUpload.emit(this.cliente);
-          Swal.fire('La foto ha subido correctamente', `La foto se ha subido con exito: ${this.cliente.foto}`, 'success');
+        .subscribe(event => {
+          if(event.type === HttpEventType.Response){
+            let response: any = event.body;
+            this.cliente = response.cliente as Cliente;
+            this._modalService.notificarUpload.emit(this.cliente);
+            Swal.fire('La foto ha subido correctamente', `La foto se ha subido con exito: ${this.cliente.foto}`, 'success');
+          }
       });
     }
   }

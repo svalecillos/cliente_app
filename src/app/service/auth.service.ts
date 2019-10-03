@@ -17,7 +17,7 @@ export class AuthService {
   public get usuario(): Usuario{
     if(this._usuario != null){
       return this._usuario;
-    } else if(this._usuario == null && sessionStorage.getItem('usuario') != null){
+    } else if(this._usuario == null && sessionStorage.getItem('usuario') != null){//Si _usuario es nulo pero existe en el sessionStorage
       //COmo sessionStorage retorna un string lo transformamos en un objeto JSON
       this._usuario = JSON.parse(sessionStorage.getItem('usuario')) as Usuario;
       return this._usuario;
@@ -74,5 +74,33 @@ export class AuthService {
     }
     return null;
   }
+  
+  //Metodo que verifica si esta autenticado el usuario
+  isAuthenticated(): boolean{
+    let payload = this.obtenerDatosToken(this.token);
+    if(payload != null && payload.user_name ){
+      return true;
+    }
+    return false;
+  }
+
+  hasRole(role:string): boolean{
+    //includes valida si existe algun elemento en ese arreglo
+    if(this.usuario.roles.includes(role)){
+      return true;
+    }
+    return false;
+  }
+
+  logout():void{
+    this._token = null;
+    this._usuario = null;
+    sessionStorage.clear();
+    //En caso de no querer eliminar todo.
+    /*sessionStorage.removeItem('token');
+    sessionStorage.removeItem('usuario');*/
+  }
+
+
 
 }
