@@ -41,7 +41,7 @@
                     <div class="alert alert-info my-4" *ngIf="cliente.facturas.length == 0">
                       No hay facturas aignadas para el cliente {{ cliente.nombre }} {{ cliente.apellido }}
                     </div>
-                        <table class="table table-bordered table-striped my-4"
+                        <table class="table    table-bordered table-striped my-4"
                               *ngIf="cliente.facturas.length > 0">
                             <thead>
                               <tr>
@@ -49,6 +49,8 @@
                                 <th>Descripcion</th>
                                 <th>Fecha</th>
                                 <th>Total</th>
+                                <th>Detalle</th>
+                                <th>eliminar</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -57,6 +59,10 @@
                                 <td>{{ factura.descripcion }}</td>
                                 <td>{{ factura.createAt }}</td>
                                 <td>{{ factura.total }}</td>
+                                <td><button class="btn btn-primary btn-sm" type="button" 
+                                    [routerLink]="['/facturas', factura.id]">ver</button>
+                                </td>
+                                <td><button class="btn btn-danger btn-sm" type="button" (click)="delete(factura)">eliminar</button></td>
                               </tr>
                             </tbody>
                           </table>

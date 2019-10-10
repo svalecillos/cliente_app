@@ -14,6 +14,7 @@ import { FormComponent } from './components/cliente/form.component';
 import { DetalleComponent } from './components/cliente/detalle/detalle.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { LoginComponent } from './components/usuario/login.component';
+import { DetalleFacturaComponent } from './components/facturas/detalle-factura.component';
 
 //Services
 import { ClienteService } from './service/cliente.service';
@@ -35,7 +36,8 @@ const routes:Routes = [
   {path: 'clientes/page/:page', component: ClienteComponent},
   {path: 'clientes/form', component: FormComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
   {path: 'clientes/form/:id', component: FormComponent, canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'}},
-  {path: 'login', component: LoginComponent}
+  {path: 'login', component: LoginComponent},
+  {path: 'facturas/:id', component: DetalleFacturaComponent}
 ];
 
 @NgModule({
@@ -48,6 +50,7 @@ const routes:Routes = [
     PaginatorComponent,
     DetalleComponent,
     LoginComponent,
+    DetalleFacturaComponent,
   ],
   imports: [
     BrowserModule,

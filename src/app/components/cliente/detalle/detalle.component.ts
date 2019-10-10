@@ -5,6 +5,8 @@ import { ModalService } from '../../../service/modal.service';
 import Swal from 'sweetalert2';
 import { HttpEventType } from '@angular/common/http';
 import { AuthService } from 'src/app/service/auth.service';
+import { FacturasService } from 'src/app/service/facturas.service';
+import { Factura } from 'src/app/model/factura';
 
 @Component({
   selector: 'app-detalle',
@@ -19,6 +21,7 @@ export class DetalleComponent implements OnInit {
   private fotoSeleccionada: File;
 
   constructor( private _clienteService: ClienteService,
+                private _facturaService: FacturasService,
                 private _authService: AuthService,
                 private _modalService: ModalService) { }
 
@@ -63,5 +66,31 @@ export class DetalleComponent implements OnInit {
   cerrarModal(){
     this._modalService.cerrarModal();
     this.fotoSeleccionada = null;
+  }
+
+  delete(factura: Factura): void {
+    Swal.fire({
+      title: 'Eliminar cliente?',
+      text: `Quieres eliminar la factura ${factura.descripcion}?`,
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar!',
+      confirmButtonText: 'Si, eliminar!'
+    }).then((result) => {
+      if (result.value) {
+        this._facturaService.delete(factura.id).subscribe(
+          response => {
+            this.cliente.facturas = this.cliente.facturas.filter(fac => fac != factura)// Si cliente es distinto al cliente, lo va a mostrar en la nueva lista
+            Swal.fire(
+              'Factura eliminada!',
+              'la factura fue eliminado con exito.',
+              'success'
+            )
+          }
+        )
+      }
+    })
   }
 }
