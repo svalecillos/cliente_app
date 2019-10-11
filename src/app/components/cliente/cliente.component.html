@@ -42,6 +42,9 @@
             <button type="button" name="eliminar" 
                     (click)="delete(cliente)"
                     class="btn btn-danger btn-sm">Eliminar</button>
+            <button type="button" name="eliminar" 
+                    [routerLink]="['/facturas/form', cliente.id]"
+                    class="btn btn-success btn-sm">crear factura</button>
           </td>
         </tr>
       </tbody>

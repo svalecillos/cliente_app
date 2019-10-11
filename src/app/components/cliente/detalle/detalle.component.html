@@ -36,6 +36,11 @@
                       <img *ngIf="cliente?.foto" src="http://localhost:8080/api/uploads/img/{{ cliente.foto }}" alt="{{ cliente.foto }}" class="img-thumbnail rounded">
                     </div>
                   </div>
+                  <div class="row">
+                      <button type="button" name="eliminar" 
+                      [routerLink]="['/facturas/form', cliente.id]"
+                      class="btn btn-success btn-sm">crear factura</button>
+                  </div>
                   <!--Listar las facturas del cliente-->
                   <div class="row">
                     <div class="alert alert-info my-4" *ngIf="cliente.facturas.length == 0">

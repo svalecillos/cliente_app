@@ -1,0 +1,54 @@
+<div class="card bg-light">
+    <div class="card-header">{{titulo}}: {{factura.descripcion}}</div>
+    <div class="card-body">
+      <h4 class="card-title">
+        <a [routerLink]="['/clientes']" class="btn btn-light btn-xs">&laquo; volver</a>
+      </h4>
+
+      <form action="">
+
+        <div class="form-group row" *ngIf="factura.cliente">
+          <label for="cliente" class="col-sm-2 col-form-label">Cliente</label>
+          <div class="col-sm-6">
+            <input type="text" name="cliente" value="{{factura.cliente.nombre}} {{factura.cliente.apellido}}" 
+                   class="form-control" disabled/>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="descripcion" class="col-sm-2 col-form-label">Descripcion</label>
+          <div class="col-sm-6">
+            <input type="text" name="descripcion" [(ngModel)] = "factura.descripcion" class="form-control"/>
+          </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label">Observacion</label>
+            <div class="col-sm-6">
+              <textarea name="observacion" [(ngModel)]="factura.observacion" class="form-control"></textarea>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+                <mat-form-field class="example-full-width">
+                    <input type="text" placeholder="Añadir producto" aria-label="Number" matInput [formControl]="autocompleteControl" [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                      <!--Se utiliza el iterable async para iterar el observable-->
+                      <mat-option *ngFor="let producto of productosFiltrados | async" [value]="producto">
+                        {{producto}}
+                      </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-group row">
+              <div class="col-sm-6">
+                <input type="submit" value="Crear Factura" class="btn btn-secondary">
+              </div>
+            </div>
+      </form>
+
+    </div>
+</div>
