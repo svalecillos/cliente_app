@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Factura } from '../model/factura';
+import { Producto } from '../model/producto';
 
 
 @Injectable({
@@ -22,4 +23,11 @@ export class FacturasService {
     return this.http.delete<void>(`${this.urlEndPoint}/${id}`);
   }
 
+  filtrarProductos(termino:string):Observable<Producto[]>{
+    return this.http.get<Producto[]>(`${this.urlEndPoint}/filtrar-productos/${termino}`);
+  }
+
+  create(factura: Factura):Observable<Factura>{
+    return this.http.post<Factura>(this.urlEndPoint, factura);
+  }
 }
